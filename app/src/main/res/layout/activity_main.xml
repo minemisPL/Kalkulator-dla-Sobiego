@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:enabled="false"/>
+
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="40dp"
+        android:text="7"
+        app:layout_constraintEnd_toStartOf="@+id/button11"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="48dp"
+        android:text="8"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+
+    <Button
+        android:id="@+id/button12"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="40dp"
+        android:text="9"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+
+    <Button
+        android:id="@+id/button13"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="48dp"
+        android:text="/"
+        app:layout_constraintStart_toEndOf="@+id/button12"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+
+    <Button
+        android:id="@+id/button14"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="40dp"
+        android:text="4"
+        app:layout_constraintStart_toStartOf="@+id/button10"
+        app:layout_constraintTop_toBottomOf="@+id/button10" />
+
+    <Button
+        android:id="@+id/button15"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:text="5"
+        app:layout_constraintStart_toEndOf="@+id/button14"
+        app:layout_constraintTop_toBottomOf="@+id/button11" />
+
+    <Button
+        android:id="@+id/button16"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:text="6"
+        app:layout_constraintStart_toEndOf="@+id/button15"
+        app:layout_constraintTop_toBottomOf="@+id/button12" />
+
+    <Button
+        android:id="@+id/button17"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:text="*"
+        app:layout_constraintStart_toEndOf="@+id/button16"
+        app:layout_constraintTop_toBottomOf="@+id/button13" />
+
+    <Button
+        android:id="@+id/button18"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="40dp"
+        android:text="1"
+        app:layout_constraintStart_toStartOf="@+id/button14"
+        app:layout_constraintTop_toBottomOf="@+id/button14" />
+
+    <Button
+        android:id="@+id/button19"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:text="2"
+        app:layout_constraintStart_toEndOf="@+id/button18"
+        app:layout_constraintTop_toBottomOf="@+id/button15" />
+
+    <Button
+        android:id="@+id/button20"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:text="3"
+        app:layout_constraintStart_toEndOf="@+id/button19"
+        app:layout_constraintTop_toBottomOf="@+id/button16" />
+
+    <Button
+        android:id="@+id/button21"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:text="-"
+        app:layout_constraintStart_toEndOf="@+id/button20"
+        app:layout_constraintTop_toBottomOf="@+id/button17" />
+
+    <Button
+        android:id="@+id/button22"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="40dp"
+        android:text="0"
+        app:layout_constraintStart_toStartOf="@+id/button18"
+        app:layout_constraintTop_toBottomOf="@+id/button18" />
+
+    <Button
+        android:id="@+id/button23"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:text="."
+        app:layout_constraintStart_toEndOf="@+id/button22"
+        app:layout_constraintTop_toBottomOf="@+id/button19" />
+
+    <Button
+        android:id="@+id/button24"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:text="="
+        app:layout_constraintStart_toEndOf="@+id/button23"
+        app:layout_constraintTop_toBottomOf="@+id/button20" />
+
+    <Button
+        android:id="@+id/button25"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:text="+"
+        app:layout_constraintStart_toEndOf="@+id/button24"
+        app:layout_constraintTop_toBottomOf="@+id/button21" />
+
+    <Button
+        android:id="@+id/button26"
+        android:layout_width="70dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="-6dp"
+        android:layout_marginTop="40dp"
+        android:text="CE"
+        app:layout_constraintStart_toStartOf="@+id/button22"
+        app:layout_constraintTop_toBottomOf="@+id/button22" />
+
+    <Button
+        android:id="@+id/button27"
+        android:layout_width="61dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="40dp"
+        android:text="+/-"
+        app:layout_constraintStart_toEndOf="@+id/button26"
+        app:layout_constraintTop_toBottomOf="@+id/button23" />
+
+    <Button
+        android:id="@+id/button28"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="40dp"
+        android:text="%"
+        app:layout_constraintStart_toEndOf="@+id/button27"
+        app:layout_constraintTop_toBottomOf="@+id/button24" />
+
+    <Button
+        android:id="@+id/button29"
+        android:layout_width="71dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="40dp"
+        android:text="DEL"
+        app:layout_constraintStart_toEndOf="@+id/button28"
+        app:layout_constraintTop_toBottomOf="@+id/button25" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
