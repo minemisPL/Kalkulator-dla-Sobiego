@@ -5,10 +5,9 @@ public class MathManager {
     private double secondNumber = Double.MIN_VALUE;
     private String operator;
 
-    public void setNextNumber(String input) {
+    public void setNumber(String input, CalcEnum calcEnum) {
 
-        String inputProperNumber = input.contains(" ") ? input.split(" ")[1] : input;
-        String[] split = inputProperNumber.split("\\.");
+        String[] split = input.split("\\.");
 
         int decimal = Integer.parseInt(split[0]);
         int point = 0;
@@ -19,13 +18,9 @@ public class MathManager {
 
         double doubleNumber = decimal + point / (Math.pow(10, String.valueOf(point).length()));
 
-        if (this.firstNumber == Double.MIN_VALUE) {
+        if (calcEnum == CalcEnum.FIRST) {
             this.firstNumber = doubleNumber;
             return;
-        }
-
-        if (this.secondNumber != Double.MIN_VALUE) {
-            firstNumber = secondNumber;
         }
 
         secondNumber = doubleNumber;

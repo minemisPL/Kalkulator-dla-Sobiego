@@ -5,64 +5,40 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import me.minemis.calculator.InputStringManager;
 import me.minemis.calculator.MainActivity;
 import me.minemis.calculator.MathManager;
 
 
 public class OperatorListener implements View.OnClickListener {
 
-    private final EditText resultText;
+    private final EditText editText;
     private final MathManager mathManager;
+    private final InputStringManager inputStringManager;
 
     public OperatorListener(MainActivity mainActivity) {
-        this.resultText = mainActivity.getResultText();
+        this.editText = mainActivity.getResultText();
         this.mathManager = mainActivity.getMathManager();
+        this.inputStringManager = mainActivity.getInputStringManager();
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View view) {
-        String textFromCalculator = resultText.getText().toString();
         String operator = ((Button) view).getText().toString();
 
-        if (textFromCalculator.isEmpty()) {
-            return;
-        }
+        String resultText;
 
-        if (!mathManager.checkIfFirstExist()) {
-            textFromCalculator = this.changeSignIfNecessary(textFromCalculator, operator);
-
-            mathManager.setNextNumber(textFromCalculator);
-            mathManager.setOperator(operator);
-            resultText.setText(textFromCalculator + " " + operator + " ");
-            System.out.println("Return after !mathManager.checkIfFirstExist()");
-            return;
-        }
-
-        String secondNumber = textFromCalculator.split(" ")[2];
-        secondNumber = this.changeSignIfNecessary(secondNumber, operator);
-
-        mathManager.setNextNumber(secondNumber);
-        double resolveEquation = mathManager.resolveEquation();
-
-        System.out.println("Resolved equasion: " + resolveEquation);
-
-        String resultEquation = String.valueOf(resolveEquation).replace(".0", "");
-        System.out.println(resultEquation);
-
-        if (!operator.equals("=")) {
-           resultEquation += " " + operator + " ";
-            System.out.println("resultEquation += \" \" + operator + \" \";");
+        if (inputStringManager.hasOperator() && inputStringManager.hasSecondNumber()) {
+            resultText = inputStringManager.resolveEquation();
+            inputStringManager.setOperator(operator);
+            resultText += " " + inputStringManager.getOperator();
         } else {
-            mathManager.equalsReset();
-            System.out.println("mathManager.equalsReset();");
+            inputStringManager.setOperator(operator);
+            resultText = inputStringManager.getResultString();
         }
 
-        mathManager.setOperator(operator);
-        System.out.println("Operator: " + operator);
-
-        resultText.setText(resultEquation);
-
+        editText.setText(resultText);
     }
 
     private String changeSignIfNecessary(String number, String operator) {
@@ -75,3 +51,37 @@ public class OperatorListener implements View.OnClickListener {
         return result;
     }
 }
+
+//        String textFromCalculator = resultText.getText().toString();
+//        String operator = ((Button) view).getText().toString();
+//
+//        if (textFromCalculator.isEmpty()) {
+//            return;
+//        }
+//
+//        if (!mathManager.checkIfFirstExist()) {
+//            textFromCalculator = this.changeSignIfNecessary(textFromCalculator, operator);
+//
+//            mathManager.setNumber(textFromCalculator);
+//            mathManager.setOperator(operator);
+//            resultText.setText(textFromCalculator + " " + operator + " ");
+//            return;
+//        }
+//
+//        String secondNumber = textFromCalculator.split(" ")[2];
+//        secondNumber = this.changeSignIfNecessary(secondNumber, operator);
+//
+//        mathManager.setNumber(secondNumber);
+//        double resolveEquation = mathManager.resolveEquation();
+//
+//        String resultEquation = String.valueOf(resolveEquation).replace(".0", "");
+//
+//        if (!operator.equals("=")) {
+//           resultEquation += " " + operator + " ";
+//        } else {
+//            mathManager.equalsReset();
+//        }
+//
+//        mathManager.setOperator(operator);
+//
+//        resultText.setText(resultEquation);

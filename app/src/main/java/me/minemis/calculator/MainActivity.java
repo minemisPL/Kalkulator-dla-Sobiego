@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final Map<String, Button> buttons = new LinkedHashMap<>();
     private EditText resultText;
+    private InputStringManager inputStringManager;
     private MathManager mathManager;
 
     @Override
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void assignValues() {
         mathManager = new MathManager();
+        inputStringManager = new InputStringManager(mathManager);
 
         resultText =          findViewById(R.id.editTextTextPersonName);
 
@@ -83,5 +85,9 @@ public class MainActivity extends AppCompatActivity {
 
     public MathManager getMathManager() {
         return mathManager;
+    }
+
+    public InputStringManager getInputStringManager() {
+        return inputStringManager;
     }
 }

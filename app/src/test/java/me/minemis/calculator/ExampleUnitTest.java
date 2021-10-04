@@ -12,6 +12,13 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+        String test = "55 + ";
+        String[] split = test.split(" ");
+
+        for (String s : split) {
+            System.out.println(s);
+        }
+
+        assertEquals(2, split.length);
     }
 }
