@@ -1,19 +1,23 @@
 package me.minemis.calculator;
 
 public class MathManager {
-    private double firstNumber = Double.MIN_VALUE;
-    private double secondNumber = Double.MIN_VALUE;
+    private double firstNumber = Double.NaN;
+    private double secondNumber = Double.NaN;
     private String operator;
 
     public void setNumber(String input, CalcEnum calcEnum) {
 
         String[] split = input.split("\\.");
 
-        int decimal = Integer.parseInt(split[0]);
-        int point = 0;
+        long decimal = Long.parseLong(split[0]);
+        long point = 0;
 
-        if (input.contains(".")) {
-            point = Integer.parseInt(split[1]);
+        if (split.length == 2) {
+            point = Long.parseLong(split[1]);
+        }
+
+        if (decimal < 0) {
+            point *= -1;
         }
 
         double doubleNumber = decimal + point / (Math.pow(10, String.valueOf(point).length()));
@@ -31,7 +35,7 @@ public class MathManager {
     }
 
     public double resolveEquation() {
-        double result = Double.MIN_VALUE;
+        double result = Double.NaN;
 
         if (operator.equals("+")) {
             result =  firstNumber + secondNumber;
@@ -46,29 +50,17 @@ public class MathManager {
         }
 
         if (operator.equals("/")) {
-            if (secondNumber == 0) {
-                result = 0;
-            } else {
-                result = firstNumber / secondNumber;
-            }
+            result = secondNumber == 0 ? 0 : firstNumber / secondNumber;
         }
 
         firstNumber = result;
-        secondNumber = Double.MIN_VALUE;
+        secondNumber = Double.NaN;
 
         return result;
     }
 
     public void equalsReset() {
         firstNumber = secondNumber;
-        secondNumber = Double.MIN_VALUE;
-    }
-
-    public boolean checkIfSecondExist() {
-        return secondNumber != Double.MIN_VALUE;
-    }
-
-    public boolean checkIfFirstExist() {
-        return firstNumber != Double.MIN_VALUE;
+        secondNumber = Double.NaN;
     }
 }

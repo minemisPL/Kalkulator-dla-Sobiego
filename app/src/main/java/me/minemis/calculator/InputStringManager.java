@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class InputStringManager {
-    private Map<CalcEnum, String> map = new HashMap<>();
+    private final Map<CalcEnum, String> map = new HashMap<>();
     private CalcEnum selectedString = CalcEnum.FIRST;
     private final MathManager mathManager;
 
@@ -19,11 +19,15 @@ public class InputStringManager {
     public void setNextNumber(String text) {
         String workingText = map.get(selectedString);
 
-        if (map.get(CalcEnum.OPERATOR).equals("=")) {
+        if (workingText == null) {
+            throw new NullPointerException();
+        }
+
+        if ("=".equals(map.get(CalcEnum.OPERATOR))) {
             return;
         }
 
-        assert workingText != null;
+
         if (checkForDoubleDots(workingText, text)) {
             return;
         }
@@ -69,7 +73,7 @@ public class InputStringManager {
 
     public String getOperator() {
         String operator = map.get(CalcEnum.OPERATOR);
-        if (operator.equals("=")) {
+        if ("=".equals(operator)) {
             return "";
         }
         return operator;
