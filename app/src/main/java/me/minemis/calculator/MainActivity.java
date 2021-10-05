@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             button = buttons.get(String.valueOf(i));
 
             if (button != null) {
-            button.setOnClickListener(new NumberListener(this));
+                button.setOnClickListener(new NumberListener(this));
             }
         }
 
