@@ -1,5 +1,6 @@
 package me.minemis.calculator.listeners;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,23 +19,22 @@ public class OperatorListener implements View.OnClickListener {
         this.inputStringManager = mainActivity.getInputStringManager();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View view) {
         String operator = ((Button) view).getText().toString();
 
-        if (!inputStringManager.hasSecondNumber()) {
-            inputStringManager.setOperator(operator);
-            editText.setText(inputStringManager.getResultString());
-            return;
-        }
+        String resultText;
 
-        if (inputStringManager.hasOperator()) {
-            String resultText = inputStringManager.resolveEquation();
+        if (inputStringManager.hasOperator() && inputStringManager.hasSecondNumber()) {
+            resultText = inputStringManager.resolveEquation();
             inputStringManager.setOperator(operator);
             resultText += " " + inputStringManager.getOperator();
-
-            editText.setText(resultText);
+        } else {
+            inputStringManager.setOperator(operator);
+            resultText = inputStringManager.getResultString();
         }
-    }
 
+        editText.setText(resultText);
+    }
 }

@@ -9,6 +9,8 @@ import android.widget.EditText;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import me.minemis.calculator.listeners.ChangeSignListener;
+import me.minemis.calculator.listeners.ClearListener;
 import me.minemis.calculator.listeners.NumberListener;
 import me.minemis.calculator.listeners.OperatorListener;
 
@@ -48,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
         buttons.get("*").setOnClickListener(new OperatorListener(this));
         buttons.get("/").setOnClickListener(new OperatorListener(this));
         buttons.get("=").setOnClickListener(new OperatorListener(this));
-        buttons.get("+/-").setOnClickListener(new OperatorListener(this));
+        buttons.get("+/-").setOnClickListener(new ChangeSignListener(this));
+        buttons.get("CE").setOnClickListener(new ClearListener(this));
     }
 
     private void assignValues() {
@@ -81,10 +84,6 @@ public class MainActivity extends AppCompatActivity {
 
     public EditText getResultText() {
         return resultText;
-    }
-
-    public MathManager getMathManager() {
-        return mathManager;
     }
 
     public InputStringManager getInputStringManager() {

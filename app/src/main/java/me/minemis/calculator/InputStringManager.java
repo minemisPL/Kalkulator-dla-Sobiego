@@ -27,7 +27,6 @@ public class InputStringManager {
             return;
         }
 
-
         if (checkForDoubleDots(workingText, text)) {
             return;
         }
@@ -55,12 +54,36 @@ public class InputStringManager {
         mathManager.setOperator(map.get(CalcEnum.OPERATOR));
 
         String equation = String.valueOf(mathManager.resolveEquation());
-        equation = equation.replace(".0", "");
+
+        if (Double.parseDouble(equation) % 1 == 0) {
+            equation = equation.replace(".0", "");
+        }
 
         map.put(CalcEnum.FIRST, equation);
         map.put(CalcEnum.SECOND, "");
 
         return equation;
+    }
+
+    public void changeSign() {
+        String number = map.get(selectedString);
+        System.out.println("selectedString = " + selectedString);
+        if (number == null) {
+            return;
+        }
+
+        number = number.contains("-")
+                ? number.replace("-", "")
+                : "-" + number;
+
+        map.put(selectedString, number);
+    }
+
+    public void clear() {
+        map.put(CalcEnum.FIRST, "");
+        map.put(CalcEnum.OPERATOR, "");
+        map.put(CalcEnum.SECOND, "");
+        selectedString = CalcEnum.FIRST;
     }
 
     private boolean checkForDoubleDots(String numberString, String text) {

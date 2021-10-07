@@ -6,19 +6,18 @@ import android.widget.EditText;
 import me.minemis.calculator.InputStringManager;
 import me.minemis.calculator.MainActivity;
 
-public class ChangeSignListener implements View.OnClickListener {
+public class ClearListener implements View.OnClickListener {
     private final EditText editText;
     private final InputStringManager inputStringManager;
 
-    public ChangeSignListener(MainActivity mainActivity) {
+    public ClearListener(MainActivity mainActivity) {
         this.editText = mainActivity.getResultText();
         this.inputStringManager = mainActivity.getInputStringManager();
     }
 
     @Override
     public void onClick(View view) {
-        inputStringManager.changeSign();
-
+        inputStringManager.clear();
         editText.setText(inputStringManager.getResultString());
     }
 }
