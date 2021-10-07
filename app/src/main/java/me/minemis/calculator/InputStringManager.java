@@ -48,6 +48,10 @@ public class InputStringManager {
         return !Objects.equals(map.get(CalcEnum.SECOND), "");
     }
 
+    public boolean hasFirstNumber() {
+        return !Objects.equals(map.get(CalcEnum.FIRST), "");
+    }
+
     public String resolveEquation() {
         mathManager.setNumber(map.get(CalcEnum.FIRST), CalcEnum.FIRST);
         mathManager.setNumber(map.get(CalcEnum.SECOND), CalcEnum.SECOND);

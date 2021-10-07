@@ -24,6 +24,10 @@ public class OperatorListener implements View.OnClickListener {
 
         String resultText;
 
+        if (!inputStringManager.hasFirstNumber()) {
+            return;
+        }
+
         if (inputStringManager.hasOperator() && inputStringManager.hasSecondNumber()) {
             resultText = inputStringManager.resolveEquation();
             inputStringManager.setOperator(operator);
