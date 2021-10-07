@@ -1,26 +1,29 @@
 package me.minemis.calculator;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+
 public class MathManager {
-    private double firstNumber = Double.NaN;
-    private double secondNumber = Double.NaN;
+    private BigDecimal firstNumber;
+    private BigDecimal secondNumber;
     private String operator;
 
     public void setNumber(String input, CalcEnum calcEnum) {
 
         String[] split = input.split("\\.");
 
-        long decimal = Long.parseLong(split[0]);
-        long point = 0;
+        BigDecimal decimal = new BigDecimal(split[0]);
+        BigDecimal point = new BigDecimal(0);
 
         if (split.length == 2) {
-            point = Long.parseLong(split[1]);
+            point = new BigDecimal(split[1]);
         }
 
-        if (decimal < 0) {
-            point *= -1;
+        if (decimal.doubleValue() < 0) {
+            point = point.multiply(BigDecimal.valueOf(-1), MathContext.DECIMAL64);
         }
-
-        double doubleNumber = decimal + point / (Math.pow(10, String.valueOf(point).length()));
+        double pow = Math.pow(10, String.valueOf(point).length());
+        BigDecimal doubleNumber = decimal.add(point.divide(BigDecimal.valueOf(pow), MathContext.DECIMAL64));
 
         if (calcEnum == CalcEnum.FIRST) {
             this.firstNumber = doubleNumber;
@@ -35,32 +38,29 @@ public class MathManager {
     }
 
     public double resolveEquation() {
-        double result = Double.NaN;
+        BigDecimal result = new BigDecimal(0);
 
         if (operator.equals("+")) {
-            result =  firstNumber + secondNumber;
+            result = new BigDecimal(String.valueOf(firstNumber.add(secondNumber)));
         }
 
         if (operator.equals("-")) {
-            result = firstNumber - secondNumber;
+            result = new BigDecimal(String.valueOf(firstNumber.subtract(secondNumber)));
         }
 
         if (operator.equals("*")) {
-            result = firstNumber * secondNumber;
+            result = new BigDecimal(String.valueOf(firstNumber.multiply(secondNumber)));
         }
 
         if (operator.equals("/")) {
-            result = secondNumber == 0 ? 0 : firstNumber / secondNumber;
+            result = new BigDecimal(
+                    String.valueOf(secondNumber.doubleValue() == 0.0
+                            ? 0
+                            : firstNumber.divide(secondNumber)));
         }
 
         firstNumber = result;
-        secondNumber = Double.NaN;
 
-        return result;
-    }
-
-    public void equalsReset() {
-        firstNumber = secondNumber;
-        secondNumber = Double.NaN;
+        return result.doubleValue();
     }
 }

@@ -55,6 +55,7 @@ public class InputStringManager {
         mathManager.setOperator(map.get(CalcEnum.OPERATOR));
 
         String equation = String.valueOf(mathManager.resolveEquation());
+        equation = equation.replace(".0", "");
 
         map.put(CalcEnum.FIRST, equation);
         map.put(CalcEnum.SECOND, "");
