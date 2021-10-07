@@ -40,18 +40,6 @@ public class InputStringManager {
         selectedString = CalcEnum.SECOND;
     }
 
-    public boolean hasOperator() {
-        return !Objects.equals(map.get(CalcEnum.OPERATOR), "");
-    }
-
-    public boolean hasSecondNumber() {
-        return !Objects.equals(map.get(CalcEnum.SECOND), "");
-    }
-
-    public boolean hasFirstNumber() {
-        return !Objects.equals(map.get(CalcEnum.FIRST), "");
-    }
-
     public String resolveEquation() {
         mathManager.setNumber(map.get(CalcEnum.FIRST), CalcEnum.FIRST);
         mathManager.setNumber(map.get(CalcEnum.SECOND), CalcEnum.SECOND);
@@ -67,6 +55,17 @@ public class InputStringManager {
         map.put(CalcEnum.SECOND, "");
 
         return equation;
+    }
+
+    public void dropLast() {
+        String number = map.get(selectedString);
+        if (number == null) {
+            return;
+        }
+
+        number = number.substring(0, number.length() - 1);
+
+        map.put(selectedString, number);
     }
 
     public void changeSign() {
@@ -95,6 +94,18 @@ public class InputStringManager {
                 || numberString.isEmpty() && text.equals(".");
     }
 
+    public boolean hasOperator() {
+        return !Objects.equals(map.get(CalcEnum.OPERATOR), "");
+    }
+
+    public boolean hasSecondNumber() {
+        return !Objects.equals(map.get(CalcEnum.SECOND), "");
+    }
+
+    public boolean hasFirstNumber() {
+        return !Objects.equals(map.get(CalcEnum.FIRST), "");
+    }
+
     public String getResultString() {
         return map.get(CalcEnum.FIRST) + " " + getOperator() + " " + map.get(CalcEnum.SECOND);
     }
@@ -106,6 +117,4 @@ public class InputStringManager {
         }
         return operator;
     }
-
-
 }

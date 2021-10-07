@@ -2,20 +2,11 @@ package me.minemis.calculator.listeners;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-
-import me.minemis.calculator.InputStringManager;
 import me.minemis.calculator.MainActivity;
 
-
-public class OperatorListener implements View.OnClickListener {
-
-    private final EditText editText;
-    private final InputStringManager inputStringManager;
-
+public class OperatorListener extends CalcListener{
     public OperatorListener(MainActivity mainActivity) {
-        this.editText = mainActivity.getResultText();
-        this.inputStringManager = mainActivity.getInputStringManager();
+        super(mainActivity);
     }
 
     @Override
