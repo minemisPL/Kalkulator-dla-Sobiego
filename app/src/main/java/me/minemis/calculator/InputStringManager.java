@@ -24,7 +24,7 @@ public class InputStringManager {
         }
 
         if ("=".equals(map.get(CalcEnum.OPERATOR))) {
-            return;
+            clear();
         }
 
         if (checkForDoubleDots(workingText, text)) {
