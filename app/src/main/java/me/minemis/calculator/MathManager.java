@@ -56,7 +56,7 @@ public class MathManager {
             result = new BigDecimal(
                     String.valueOf(secondNumber.doubleValue() == 0.0
                             ? 0
-                            : firstNumber.divide(secondNumber)));
+                            : firstNumber.divide(secondNumber, BigDecimal.ROUND_DOWN, 6).doubleValue()));
         }
 
         firstNumber = result;
