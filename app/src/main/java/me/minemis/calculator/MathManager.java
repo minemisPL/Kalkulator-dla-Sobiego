@@ -11,8 +11,16 @@ public class MathManager {
     public void setNumber(String input, CalcEnum calcEnum) {
 
         boolean isNegative = input.contains("-");
+        boolean isPercent = false;
 
-        String[] split = input.split("\\.");
+        String workingText = input;
+
+        if (input.contains("%")) {
+            isPercent = true;
+            workingText = workingText.replace("%", "");
+        }
+
+        String[] split = workingText.split("\\.");
         split[0] = split[0].replace("-", "");
 
         BigDecimal decimal = new BigDecimal(split[0]);
@@ -39,6 +47,10 @@ public class MathManager {
             doubleNumber = doubleNumber.multiply(BigDecimal.valueOf(-1));
         }
 
+        if (isPercent) {
+            doubleNumber = doubleNumber.divide(new BigDecimal(100), BigDecimal.ROUND_HALF_DOWN, 6);
+        }
+
         if (calcEnum == CalcEnum.FIRST) {
             this.firstNumber = doubleNumber;
             return;
@@ -63,8 +75,6 @@ public class MathManager {
         System.out.println("Subtract: " + resultString);
         resultString = String.valueOf(firstNumber.multiply(secondNumber));
         System.out.println("Multiply: " + resultString);
-        resultString = String.valueOf(firstNumber.divide(secondNumber, BigDecimal.ROUND_DOWN, 6));
-        System.out.println("Divide: " + resultString);
 
 
         if (operator.equals("+")) {

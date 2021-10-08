@@ -27,7 +27,7 @@ public class InputStringManager {
             clear();
         }
 
-        if (checkForDoubleDots(workingText, text)) {
+        if (checkForWrongSignUsage(workingText, text)) {
             return;
         }
 
@@ -88,9 +88,13 @@ public class InputStringManager {
         selectedString = CalcEnum.FIRST;
     }
 
-    private boolean checkForDoubleDots(String numberString, String text) {
-        return (numberString.contains(".") && text.equals("."))
-                || numberString.isEmpty() && text.equals(".");
+    private boolean checkForWrongSignUsage(String numberString, String sign) {
+        String workingText = numberString.replace("-", "");
+        switch (sign) {
+            case ".": return workingText.contains(".") || workingText.isEmpty();
+            case "%": return workingText.contains("%") || workingText.isEmpty();
+            default: return numberString.contains("%");
+        }
     }
 
     public boolean hasOperator() {

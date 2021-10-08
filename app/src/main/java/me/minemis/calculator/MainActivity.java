@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         buttons.get("+/-").setOnClickListener(new ChangeSignListener(this));
         buttons.get("CE").setOnClickListener(new ClearListener(this));
         buttons.get("DEL").setOnClickListener(new DelListener(this));
+        buttons.get("%").setOnClickListener(new NumberListener(this));
     }
 
     private void assignValues() {
