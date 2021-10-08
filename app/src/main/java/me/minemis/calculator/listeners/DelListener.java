@@ -11,6 +11,8 @@ public class DelListener extends CalcListener{
 
     @Override
     public void onClick(View v) {
+        inputStringManager.dropLast();
 
+        editText.setText(inputStringManager.getResultString());
     }
 }

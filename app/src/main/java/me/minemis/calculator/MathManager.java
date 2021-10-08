@@ -17,15 +17,17 @@ public class MathManager {
 
         BigDecimal decimal = new BigDecimal(split[0]);
         BigDecimal point = new BigDecimal(0);
+        double pow = 1;
 
         if (split.length == 2) {
             point = new BigDecimal(split[1]);
+            pow = Math.pow(10, split[1].length());
         }
 
         System.out.println("------------------------------");
         System.out.println("Decimal: " + decimal);
         System.out.println("Point before changing sign: " + point);
-        double pow = Math.pow(10, String.valueOf(point).length());
+
 
         System.out.println("Point after changing sign: " + point);
 

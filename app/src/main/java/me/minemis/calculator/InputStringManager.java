@@ -59,10 +59,9 @@ public class InputStringManager {
 
     public void dropLast() {
         String number = map.get(selectedString);
-        if (number == null) {
+        if (number == null || number.isEmpty()) {
             return;
         }
-
         number = number.substring(0, number.length() - 1);
 
         map.put(selectedString, number);
