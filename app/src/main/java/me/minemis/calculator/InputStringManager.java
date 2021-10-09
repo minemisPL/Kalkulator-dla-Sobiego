@@ -1,123 +1,175 @@
 package me.minemis.calculator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class InputStringManager {
-    private final Map<CalcEnum, String> map = new HashMap<>();
+    private final Map<CalcEnum, NumberStringData> map = new HashMap<>();
+    private String operator = "";
     private CalcEnum selectedString = CalcEnum.FIRST;
     private final MathManager mathManager;
 
     public InputStringManager(MathManager mathManager) {
         this.mathManager = mathManager;
-        map.put(CalcEnum.FIRST, "");
-        map.put(CalcEnum.OPERATOR, "");
-        map.put(CalcEnum.SECOND, "");
+        map.put(CalcEnum.FIRST, new NumberStringData(CalcEnum.FIRST));
+        map.put(CalcEnum.SECOND, new NumberStringData(CalcEnum.SECOND));
     }
 
-    public void setNextNumber(String text) {
-        String workingText = map.get(selectedString);
+    public void appendNextNumber(String text) {
+        NumberStringData numberStringData = map.get(selectedString);
 
-        if (workingText == null) {
-            throw new NullPointerException();
+        if (numberStringData == null) {
+            return;
         }
 
-        if ("=".equals(map.get(CalcEnum.OPERATOR))) {
+        if (this.operator.equals("=")) {
             clear();
         }
+
+        String workingText = numberStringData.numberString;
 
         if (checkForWrongSignUsage(workingText, text)) {
             return;
         }
 
+        if (text.equals("%")) {
+            numberStringData.isPercent = true;
+            return;
+        }
+
         workingText += text;
-        map.put(selectedString, workingText);
+        numberStringData.numberString = workingText;
     }
 
     public void setOperator(String operator) {
-        map.put(CalcEnum.OPERATOR, operator);
-        selectedString = CalcEnum.SECOND;
+        this.operator = operator;
+        if (!operator.equals("=")) {
+            this.selectedString = CalcEnum.SECOND;
+        }
     }
 
     public String resolveEquation() {
-        mathManager.setNumber(map.get(CalcEnum.FIRST), CalcEnum.FIRST);
-        mathManager.setNumber(map.get(CalcEnum.SECOND), CalcEnum.SECOND);
-        mathManager.setOperator(map.get(CalcEnum.OPERATOR));
+        NumberStringData firstNumber = map.get(CalcEnum.FIRST);
+        NumberStringData secondNumber = map.get(CalcEnum.SECOND);
 
-        String equation = String.valueOf(mathManager.resolveEquation());
-
-        if (Double.parseDouble(equation) % 1 == 0) {
-            equation = equation.replace(".0", "");
+        if (firstNumber == null || secondNumber == null) {
+            return "0";
         }
 
-        map.put(CalcEnum.FIRST, equation);
-        map.put(CalcEnum.SECOND, "");
+        mathManager.setNumber(firstNumber);
+        mathManager.setNumber(secondNumber);
+        mathManager.setOperator(this.operator);
 
-        return equation;
+        String equationResult = String.valueOf(mathManager.resolveEquation());
+
+        NumberStringData resultNumber = new NumberStringData(CalcEnum.FIRST);
+
+        if (equationResult.contains("-")) {
+            resultNumber.isNegative = true;
+        }
+
+        if (Double.parseDouble(equationResult) % 1 == 0) {
+            equationResult = equationResult.replace(".0", "");
+        }
+
+        resultNumber.numberString = equationResult.replace("-", "");
+
+        map.put(CalcEnum.FIRST, resultNumber);
+        secondNumber.clear();
+
+        this.selectedString = CalcEnum.FIRST;
+
+        return equationResult;
     }
 
     public void dropLast() {
-        String number = map.get(selectedString);
-        if (number == null || number.isEmpty()) {
+        NumberStringData numberStringData = map.get(selectedString);
+        if (numberStringData == null || numberStringData.numberString.isEmpty()) {
             return;
         }
-        number = number.substring(0, number.length() - 1);
 
-        map.put(selectedString, number);
+        if (numberStringData.isPercent) {
+            numberStringData.isPercent = false;
+            return;
+        }
+
+        String numberString = numberStringData.numberString;
+
+        numberString = numberString.substring(0, numberString.length() - 1);
+
+        numberStringData.numberString = numberString;
     }
 
     public void changeSign() {
-        String number = map.get(selectedString);
-        System.out.println("selectedString = " + selectedString);
-        if (number == null) {
+        NumberStringData numberStringData = map.get(selectedString);
+
+        if (numberStringData  == null) {
             return;
         }
 
-        number = number.contains("-")
-                ? number.replace("-", "")
-                : "-" + number;
-
-        map.put(selectedString, number);
+        numberStringData.isNegative = !numberStringData.isNegative;
     }
 
     public void clear() {
-        map.put(CalcEnum.FIRST, "");
-        map.put(CalcEnum.OPERATOR, "");
-        map.put(CalcEnum.SECOND, "");
-        selectedString = CalcEnum.FIRST;
+        map.values().forEach(NumberStringData::clear);
+        this.operator = "";
+        this.selectedString = CalcEnum.FIRST;
     }
 
     private boolean checkForWrongSignUsage(String numberString, String sign) {
-        String workingText = numberString.replace("-", "");
         switch (sign) {
-            case ".": return workingText.contains(".") || workingText.isEmpty();
-            case "%": return workingText.contains("%") || workingText.isEmpty();
+            case ".": return numberString.contains(".") || numberString.isEmpty();
+            case "%": return numberString.contains("%") || numberString.isEmpty();
             default: return numberString.contains("%");
         }
     }
 
     public boolean hasOperator() {
-        return !Objects.equals(map.get(CalcEnum.OPERATOR), "");
-    }
-
-    public boolean hasSecondNumber() {
-        return !Objects.equals(map.get(CalcEnum.SECOND), "");
+        return !operator.equals("");
     }
 
     public boolean hasFirstNumber() {
-        return !Objects.equals(map.get(CalcEnum.FIRST), "");
+        NumberStringData numberStringData = map.get(CalcEnum.FIRST);
+
+        if (numberStringData == null) return false;
+        return !numberStringData.numberString.isEmpty();
+    }
+
+    public boolean hasSecondNumber() {
+        NumberStringData numberStringData = map.get(CalcEnum.SECOND);
+
+        if (numberStringData == null) return false;
+        return !numberStringData.numberString.isEmpty();
     }
 
     public String getResultString() {
-        return map.get(CalcEnum.FIRST) + " " + getOperator() + " " + map.get(CalcEnum.SECOND);
+        List<NumberStringData> stringData = new ArrayList<>();
+        List<String> strings = new ArrayList<>();
+        stringData.add(map.get(CalcEnum.FIRST));
+        stringData.add(map.get(CalcEnum.SECOND));
+
+        for (NumberStringData numberstringData : stringData) {
+            if (numberstringData == null) return "";
+
+            String workingString = numberstringData.numberString;
+
+            if (numberstringData.isNegative) {
+                workingString = "-" + workingString;
+            }
+
+            if (numberstringData.isPercent) {
+                workingString += "%";
+            }
+
+            strings.add(workingString);
+        }
+        return strings.get(0) + " " + getOperator() + " " + strings.get(1);
     }
 
     public String getOperator() {
-        String operator = map.get(CalcEnum.OPERATOR);
-        if ("=".equals(operator)) {
-            return "";
-        }
-        return operator;
+        if (this.operator.equals("=")) return "";
+        return this.operator;
     }
 }

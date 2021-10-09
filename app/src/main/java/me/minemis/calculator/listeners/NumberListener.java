@@ -12,8 +12,8 @@ public class NumberListener extends CalcListener {
     @Override
     public void onClick(View view) {
         String textFromButton = ((Button) view).getText().toString();
-        inputStringManager.setNextNumber(textFromButton);
 
+        inputStringManager.appendNextNumber(textFromButton);
         editText.setText(inputStringManager.getResultString());
     }
 }

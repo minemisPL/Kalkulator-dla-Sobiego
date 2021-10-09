@@ -11,7 +11,6 @@ public class ChangeSignListener extends CalcListener {
     @Override
     public void onClick(View view) {
         inputStringManager.changeSign();
-
         editText.setText(inputStringManager.getResultString());
     }
 }

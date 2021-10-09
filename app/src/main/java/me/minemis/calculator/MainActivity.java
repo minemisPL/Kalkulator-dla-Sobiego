@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     private final Map<String, Button> buttons = new LinkedHashMap<>();
     private EditText resultText;
     private InputStringManager inputStringManager;
-    private MathManager mathManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         assignValues();
         assignListeners();
-
     }
 
     private void assignListeners() {
@@ -58,10 +56,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void assignValues() {
-        mathManager = new MathManager();
-        inputStringManager = new InputStringManager(mathManager);
+        inputStringManager = new InputStringManager(new MathManager());
 
-        resultText =          findViewById(R.id.editTextTextPersonName);
+        resultText =       findViewById(R.id.editTextTextPersonName);
 
         buttons.put("7",   (Button) findViewById(R.id.button10));
         buttons.put("8",   (Button) findViewById(R.id.button11));
